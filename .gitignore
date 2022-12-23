@@ -5,7 +5,7 @@
 backend/*.log
 backend/*.pot
 backend/*.pyc
-backend/__pycache__/
+__pycache__/
 backend/local_settings.py
 backend/db.sqlite3
 backend/db.sqlite3-journal
@@ -197,3 +197,8 @@ docker/influxdb
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+## docker files##
+docker/node-red/.npm
+docker/mosquitto/data/mosquitto.db
+docker/mosquitto/log/mosquitto.log
