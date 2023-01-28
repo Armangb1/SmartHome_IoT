@@ -132,6 +132,7 @@ backend/celerybeat.pid
 backend/*.sage.py
 
 # Environments
+frontend/python/.env
 backend/.env
 backend/.venv
 backend/env/
@@ -202,3 +203,5 @@ docker/influxdb
 docker/node-red/.npm
 docker/mosquitto/data/mosquitto.db
 docker/mosquitto/log/mosquitto.log
+
+backend/write.py
