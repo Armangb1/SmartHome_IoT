@@ -39,9 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # DRF
     'rest_framework',
-    'rest_framework.authtoken',
     # 3rd-party
-    'dj_rest_auth',
+    'rest_framework_simplejwt',
     # apps
     'api.apps.ApiConfig',
 ]
@@ -129,11 +128,20 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#  DRF settings
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+
+}
+
+
 # Influxdb config
 
 INFLUXDB_URL = "http://localhost:8086"
 INFLUXDB_ORG = "sweetsignal"
 INFLUXDB_TOKEN = "***REMOVED***"
 INFLUXDB_BUCKET = "IOT-buck"
-
-

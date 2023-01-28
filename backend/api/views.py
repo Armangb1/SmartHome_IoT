@@ -52,7 +52,6 @@ class QuerySensors(APIView):
         |> filter(fn:(r) => r._measurement == "my_measurement")\
         |> filter(fn:(r) => r._field == "{request_data["sensor"]}")'
 
-
         data = query_api.query(query=query, org=INFLUXDB_ORG)
         data = loads(data.to_json())
 
@@ -60,3 +59,12 @@ class QuerySensors(APIView):
 
 
 
+class TestApi(APIView):
+    """
+    this view is just for testing the api
+    """
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+
+        return Response("asqar sagsibil ")
