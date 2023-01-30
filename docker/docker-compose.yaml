@@ -1,16 +1,18 @@
 version: '3'
 services:
+
+  backend:
+    image: api
+    build: ../backend/
+    ports:
+      - "8000:8000"
+
   influxdb:
-    image: influxdb 
+    image: influxdb
     ports:
       - "8086:8086"
-    environment:
-      - DOCKER_INFLUXDB_INIT_MODE=setup 
-      - DOCKER_INFLUXDB_INIT_USERNAME=sweetsignal 
-      - DOCKER_INFLUXDB_INIT_PASSWORD=***REMOVED*** 
-      - DOCKER_INFLUXDB_INIT_ORG=sweetsignal 
-      - DOCKER_INFLUXDB_INIT_BUCKET=IOT-buck
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=***REMOVED***
+    env_file:
+      - influxdb.env
     volumes:
       - type: bind
         source: ./influxdb
@@ -24,10 +26,7 @@ services:
       - type: bind
         source: ./node-red
         target: /data
-  nginx:
-    image: nginx
-    ports:
-      - "8080:80"
+
   mosquitto:
     image: eclipse-mosquitto
     ports:
@@ -39,14 +38,10 @@ services:
         target: "/mosquitto/config/"
       - type: bind
         source: "./mosquitto/data/"
-        target: "/mosquitto/data/"     
+        target: "/mosquitto/data/"
       - type: bind
         source: "./mosquitto/log/"
         target: "/mosquitto/log/"
       - type: bind
         source: "./mosquitto/security/"
         target: "/mosquitto/security/"
-
-
-
-  
