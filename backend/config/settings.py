@@ -25,7 +25,7 @@ SECRET_KEY = '***REMOVED***'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.1.13","localhost"]
 
 
 # Application definition
@@ -145,3 +145,10 @@ INFLUXDB_URL = "http://localhost:8086"
 INFLUXDB_ORG = "sweetsignal"
 INFLUXDB_TOKEN = "***REMOVED***"
 INFLUXDB_BUCKET = "IOT-buck"
+
+# MQTT CONFIG
+
+MQTT_HOST = "docker-mosquitto-1"
+MQTT_PORT = 1883
+MQTT_USER = "admin"
+MQTT_PASS = "admin"

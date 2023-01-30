@@ -4,23 +4,30 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
-from config.settings import INFLUXDB_BUCKET, INFLUXDB_TOKEN, INFLUXDB_ORG, INFLUXDB_URL
+from config.settings import (INFLUXDB_BUCKET,
+                             INFLUXDB_TOKEN,
+                             INFLUXDB_ORG,
+                             INFLUXDB_URL,
+                             MQTT_PORT,
+                             MQTT_HOST,
+                             MQTT_USER,
+                             MQTT_PASS)
 from influxdb_client import InfluxDBClient
 from json import loads
+import paho.mqtt.client as mqtt
 
 
 class QuerySensors(APIView):
     """
     this view get's data about sensor from the post request
     and create a influxdb query and get data from database.
-
     for example:
     for request like this:
 
         request_data ={
             "sensor": "temprature",
             "time": "-20m",
-        } 
+        }
 
     it gets data like this:
     [
@@ -38,7 +45,25 @@ class QuerySensors(APIView):
 """
     permission_classes = [IsAdminUser]
 
-    def post(self, request):
+    def get(self, request, topic):
+
+        client = InfluxDBClient(url=INFLUXDB_URL,
+                                token=INFLUXDB_TOKEN, org=INFLUXDB_ORG)
+
+        query_api = client.query_api()
+
+        #TODO : make this ok
+        query = f'from(bucket:"{INFLUXDB_BUCKET}")\
+        |> range(start: -30m)\
+        |> filter(fn:(r) => r._measurement == "{topic}")\
+        |> filter(fn:(r) => r._field == "value")'
+
+        data = query_api.query(query=query, org=INFLUXDB_ORG)
+        data = loads(data.to_json())
+
+        return Response(data)
+
+    def post(self, request, topic):
 
         request_data = request.data
 
@@ -49,8 +74,8 @@ class QuerySensors(APIView):
         # TODO: add some more featue to the query : measurement
         query = f'from(bucket:"{INFLUXDB_BUCKET}")\
         |> range(start: {request_data["time"]})\
-        |> filter(fn:(r) => r._measurement == "my_measurement")\
-        |> filter(fn:(r) => r._field == "{request_data["sensor"]}")'
+        |> filter(fn:(r) => r._measurement == {topic})\
+        |> filter(fn:(r) => r._field == "value")'
 
         data = query_api.query(query=query, org=INFLUXDB_ORG)
         data = loads(data.to_json())
@@ -58,13 +83,24 @@ class QuerySensors(APIView):
         return Response(data)
 
 
+class WriteActuator(APIView):
+    """
+    this view post data to the actuators
 
-class TestApi(APIView):
-    """
-    this view is just for testing the api
-    """
+"""
     permission_classes = [IsAdminUser]
 
-    def get(self, request):
+    def post(self, request, topic):
 
-        return Response("asqar sagsibil ")
+        mqtt_client = mqtt.Client("python-mqtt-client")
+        mqtt_client.username_pw_set(MQTT_USER, MQTT_PASS)
+        mqtt_client.connect(MQTT_HOST, MQTT_PORT, 60)
+
+        #TODO: make it general for all controller
+        result = mqtt_client.publish(
+            f"controller1/{topic}", request.data["value"])
+
+        if result[0] == 0:
+            return Response({"status": "success"})
+        else:
+            return Response({"status": "failed"})
