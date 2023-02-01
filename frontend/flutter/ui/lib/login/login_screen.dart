@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height / 3,
-              child: Image.asset('lib/login/images/flutter.png'),
+              child: Image.asset('lib/login/images/sweetsignal.png'),
             ),
             Expanded(
               child: Container(
@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: Colors.black,
+                            color: Colors.black.withOpacity(0.8),
                           ),
                           child: TextField(
                             controller: userController,
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: 15),
-                        const Text(
+                        Text(
                           'Password',
                           style: TextStyle(
                             color: Colors.black,
@@ -89,10 +89,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: Colors.black,
+                            color: Colors.black.withOpacity(0.8),
                           ),
                           child: TextField(
                             controller: passwordController,
+                            obscureText: true,
+                            enableSuggestions: false,
+                            autocorrect: false,
                             style: const TextStyle(color: Colors.white),
                             decoration: const InputDecoration(
                               border: InputBorder.none,
@@ -115,17 +118,34 @@ class _LoginScreenState extends State<LoginScreen> {
                                 await ClientApi.login(username, password);
 
                             if (isLogedIn) {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const Home()));
+                              debugPrint("login successfully");
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => const Home()));
                             } else {
                               debugPrint("Login Failed");
                               // TODO: create pop up menu for log in errors
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Authentication Failed'),
+                                  content: const Text(
+                                      'enter correct username and password'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'OK'),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
                             }
                           },
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              color: Colors.black,
+                              color: Colors.black.withOpacity(0.9),
                             ),
                             child: const Center(
                               child: Padding(
@@ -205,6 +225,34 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class DialogExample extends StatelessWidget {
+  const DialogExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: const Text('AlertDialog description'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      ),
+      child: const Text('Show Dialog'),
     );
   }
 }

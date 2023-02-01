@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'login_token.dart' as Token;
 import 'api_constants.dart';
 
-abstract class ClientApi {
+class ClientApi {
   static Future<bool> login(String username, String password) async {
     bool isLogedIn = false;
 
