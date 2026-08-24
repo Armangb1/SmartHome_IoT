@@ -1,4 +1,8 @@
+![SweetSignal Logo](frontend/flutter/ui/lib/login/images/sweetsignal.png)
+
 # SweetSignal — SmartHome IoT
+
+> Built by **SweetSignal** — Introduction to Robotics & Lab, Fall 2022, KNTU
 
 End-to-end smart-home platform: an Arduino-based controller publishes sensor data
 over MQTT, Node-RED bridges it into InfluxDB, and a Django REST API serves the
