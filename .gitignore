@@ -1,344 +1,42 @@
-# Created by https://www.toptal.com/developers/gitignore/api/django
-# Edit at https://www.toptal.com/developers/gitignore?templates=django
-
-### Django ###
-backend/*.log
-backend/*.pot
-backend/*.pyc
+# --- Python ---
 __pycache__/
-backend/local_settings.py
-backend/db.sqlite3
-backend/db.sqlite3-journal
-backend/media
-
-# If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
-# in your Git repository. Update and uncomment the following line accordingly.
-# <django-project-name>/staticfiles/
-
-### Django.Python Stack ###
-# Byte-compiled / optimized / DLL files
-backend/*.py[cod]
-backend/*$py.class
-
-# C extensions
-backend/*.so
-
-# Distribution / packaging
-backend/.Python
-backend/build/
-backend/develop-eggs/
-backend/dist/
-backend/downloads/
-backend/eggs/
-backend/.eggs/
-backend/lib/
-backend/lib64/
-backend/parts/
-backend/sdist/
-backend/var/
-backend/wheels/
-backend/share/python-wheels/
-backend/*.egg-info/
-backend/.installed.cfg
-backend/*.egg
-backend/MANIFEST
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-backend/*.manifest
-backend/*.spec
-
-# Installer logs
-backend/pip-log.txt
-backend/pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-backend/htmlcov/
-backend/.tox/
-backend/.nox/
-backend/.coverage
-backend/.coverage.*
-backend/.cache
-backend/nosetests.xml
-backend/coverage.xml
-backend/*.cover
-backend/*.py,cover
-backend/.hypothesis/
-backend/.pytest_cache/
-backend/cover/
-
-# Translations
-backend/*.mo
-
-# Django stuff:
-
-# Flask stuff:
-backend/instance/
-backend/.webassets-cache
-
-# Scrapy stuff:
-backend/.scrapy
-
-# Sphinx documentation
-backend/docs/_build/
-
-# PyBuilder
-backend/.pybuilder/
-backend/target/
-
-# Jupyter Notebook
-backend/.ipynb_checkpoints
-
-# IPython
-backend/profile_default/
-backend/ipython_config.py
-
-# pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
-# poetry
-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
-#poetry.lock
-
-# pdm
-#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
-#pdm.lock
-#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
-#   in version control.
-#   https://pdm.fming.dev/#use-with-ide
-backend/.pdm.toml
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-backend/__pypackages__/
-
-# Celery stuff
-backend/celerybeat-schedule
-backend/celerybeat.pid
-
-# SageMath parsed files
-backend/*.sage.py
-
-# Environments
-frontend/python/.env
-backend/.env
-backend/.venv
-backend/env/
-backend/venv/
-backend/ENV/
-backend/env.bak/
-backend/venv.bak/
-
-# Spyder project settings
-backend/.spyderproject
-backend/.spyproject
-
-# Rope project settings
-backend/.ropeproject
-
-# mkdocs documentation
-backend/site
-
-# mypy
-backend/.mypy_cache/
-backend/.dmypy.json
-backend/dmypy.json
-
-# Pyre type checker
-backend/.pyre/
-
-# pytype static type analyzer
-backend/.pytype/
-
-# Cython debug symbols
-backend/cython_debug/
-
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
-
-# End of https://www.toptal.com/developers/gitignore/api/django
-
-
-
-
-
-
-
-### Docker ###
-
-docker/influxdb
-
-### VScode ###
-
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
-
-# Local History for Visual Studio Code
-.history/
-
-# Built Visual Studio Code Extensions
-*.vsix
-
-## docker files##
-docker/node-red/.npm
-docker/mosquitto/data/mosquitto.db
-docker/mosquitto/log/mosquitto.log
-
-backend/write.py
-
-
-
-# flutter
-
-# Miscellaneous
-*.class
-*.lock
-*.log
 *.pyc
-*.swp
-.DS_Store
-.atom/
-.buildlog/
-.history
-.svn/
+*.pyo
+.venv/
+venv/
+backend/db.sqlite3
+backend/htmlcov/
 
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
+# --- Environment / secrets (commit *.example instead) ---
+.env
+backend/.env
+docker/influxdb.env
 
-# Visual Studio Code related
-.classpath
-.project
-.settings/
-.vscode/
+# --- Docker runtime state (bind mounts & volumes spill here) ---
+docker/influxdb/
+docker/mosquitto/data/
+docker/mosquitto/log/
+docker/mosquitto/security/passfile*
+docker/node-red/node_modules/
+docker/node-red/.npm/
+docker/node-red/.config.*.json*
+docker/node-red/flows_cred.json*
 
-# Flutter repo-specific
-/bin/cache/
-/bin/internal/bootstrap.bat
-/bin/internal/bootstrap.sh
-/bin/mingit/
-/dev/benchmarks/mega_gallery/
-/dev/bots/.recipe_deps
-/dev/bots/android_tools/
-/dev/devicelab/ABresults*.json
-/dev/docs/doc/
-/dev/docs/flutter.docs.zip
-/dev/docs/lib/
-/dev/docs/pubspec.yaml
-/dev/integration_tests/**/xcuserdata
-/dev/integration_tests/**/Pods
-/packages/flutter/coverage/
-version
-analysis_benchmark.json
+# --- Node ---
+node_modules/
 
-# packages file containing multi-root paths
-.packages.generated
-
-# Flutter/Dart/Pub related
-**/doc/api/
-.dart_tool/
+# --- Flutter / Dart build output ---
 .flutter-plugins
 .flutter-plugins-dependencies
-**/generated_plugin_registrant.dart
+.dart_tool/
 .packages
-.pub-cache/
-.pub/
 build/
-flutter_*.png
-linked_*.ds
-unlinked.ds
-unlinked_spec.ds
+**/GeneratedPluginRegistrant.*
+*.iml
 
-# Android related
-**/android/**/gradle-wrapper.jar
-.gradle/
-**/android/captures/
-**/android/gradlew
-**/android/gradlew.bat
-**/android/local.properties
-**/android/**/GeneratedPluginRegistrant.java
-**/android/key.properties
-*.jks
-
-# iOS/XCode related
-**/ios/**/*.mode1v3
-**/ios/**/*.mode2v3
-**/ios/**/*.moved-aside
-**/ios/**/*.pbxuser
-**/ios/**/*.perspectivev3
-**/ios/**/*sync/
-**/ios/**/.sconsign.dblite
-**/ios/**/.tags*
-**/ios/**/.vagrant/
-**/ios/**/DerivedData/
-**/ios/**/Icon?
-**/ios/**/Pods/
-**/ios/**/.symlinks/
-**/ios/**/profile
-**/ios/**/xcuserdata
-**/ios/.generated/
-**/ios/Flutter/.last_build_id
-**/ios/Flutter/App.framework
-**/ios/Flutter/Flutter.framework
-**/ios/Flutter/Flutter.podspec
-**/ios/Flutter/Generated.xcconfig
-**/ios/Flutter/ephemeral
-**/ios/Flutter/app.flx
-**/ios/Flutter/app.zip
-**/ios/Flutter/flutter_assets/
-**/ios/Flutter/flutter_export_environment.sh
-**/ios/ServiceDefinitions.json
-**/ios/Runner/GeneratedPluginRegistrant.*
-
-# macOS
-**/Flutter/ephemeral/
-**/Pods/
-**/macos/Flutter/GeneratedPluginRegistrant.swift
-**/macos/Flutter/ephemeral
-**/xcuserdata/
-
-# Windows
-**/windows/flutter/generated_plugin_registrant.cc
-**/windows/flutter/generated_plugin_registrant.h
-**/windows/flutter/generated_plugins.cmake
-
-# Linux
-**/linux/flutter/generated_plugin_registrant.cc
-**/linux/flutter/generated_plugin_registrant.h
-**/linux/flutter/generated_plugins.cmake
-
-# Coverage
-coverage/
-
-# Symbols
-app.*.symbols
-
-# Exceptions to above rules.
-!**/ios/**/default.mode1v3
-!**/ios/**/default.mode2v3
-!**/ios/**/default.pbxuser
-!**/ios/**/default.perspectivev3
-!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-!/dev/ci/**/Gemfile.lock
+# --- Editors / OS ---
+.vscode/
+.idea/
+.DS_Store
+*.swp
+docker/node-red/*.backup
