@@ -11,7 +11,7 @@
         "id": "b71bd03593583ea8",
         "type": "mqtt-broker",
         "name": "mosquitto_server",
-        "broker": "docker-mosquitto-1",
+        "broker": "mosquitto",
         "port": "1883",
         "clientid": "",
         "autoConnect": true,
@@ -45,7 +45,7 @@
         "usetls": false,
         "tls": "",
         "influxdbVersion": "2.0",
-        "url": "http://docker-influxdb-1:8086",
+        "url": "http://influxdb:8086",
         "rejectUnauthorized": true
     },
     {

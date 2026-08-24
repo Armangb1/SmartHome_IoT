@@ -1,25 +1,22 @@
 FROM python:3.10-alpine
 
-# Set working directory
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
 WORKDIR /app
 
 # Install dependencies
 COPY requirements.txt .
-
-RUN python -m venv .env && \
-    source .env/bin/activate && \
-    pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
-
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1  
+RUN pip install --no-cache-dir -r requirements.txt \
+    && adduser -D appuser
 
 # Copy source code
 COPY . .
 
-# Expose port
+RUN chown -R appuser /app
+
+USER appuser
+
 EXPOSE 8000
 
-# Run the application
-CMD [ "./.env/bin/gunicorn","--bind", "0.0.0.0:8000" ,"config.wsgi:application" ]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "config.wsgi:application"]

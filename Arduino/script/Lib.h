@@ -13,9 +13,9 @@
 #define RX_PIN 2
 #define TX_PIN 3
 #define SSID_NAME "YOUR_WIFI_SSID" // put your SSID here
-#define WIFI_PASS "***REMOVED***"                 // put your WIFI password here
+#define WIFI_PASS "YOUR_WIFI_PASSWORD"                 // put your WIFI password here
 #define MQTT_USER "controller1"              // put your MQTT username here
-#define MQTT_PASS "***REMOVED***"                 // put your MQTT password here
+#define MQTT_PASS "YOUR_MQTT_PASSWORD"                 // put your MQTT password here
 #define SERVER_IP "192.168.1.13"             // put your server IP here
 #define SERVER_PORT 1883                     // put your server port here
 
