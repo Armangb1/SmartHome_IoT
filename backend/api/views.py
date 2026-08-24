@@ -52,13 +52,14 @@ class QuerySensors(APIView):
 
         query_api = client.query_api()
 
-        #TODO : make this ok
+        # TODO : make this ok
         query = f'from(bucket:"{INFLUXDB_BUCKET}")\
         |> range(start: -30m)\
         |> filter(fn:(r) => r._measurement == "{topic}")\
         |> filter(fn:(r) => r._field == "value")'
 
         data = query_api.query(query=query, org=INFLUXDB_ORG)
+        client.close()
         data = loads(data.to_json())
 
         return Response(data)
@@ -66,6 +67,7 @@ class QuerySensors(APIView):
     def post(self, request, topic):
 
         request_data = request.data
+        time_range = request_data.get("time", "-30m")
 
         client = InfluxDBClient(url=INFLUXDB_URL,
                                 token=INFLUXDB_TOKEN, org=INFLUXDB_ORG)
@@ -73,11 +75,12 @@ class QuerySensors(APIView):
 
         # TODO: add some more featue to the query : measurement
         query = f'from(bucket:"{INFLUXDB_BUCKET}")\
-        |> range(start: {request_data["time"]})\
-        |> filter(fn:(r) => r._measurement == {topic})\
+        |> range(start: {time_range})\
+        |> filter(fn:(r) => r._measurement == "{topic}")\
         |> filter(fn:(r) => r._field == "value")'
 
         data = query_api.query(query=query, org=INFLUXDB_ORG)
+        client.close()
         data = loads(data.to_json())
 
         return Response(data)
@@ -92,13 +95,17 @@ class WriteActuator(APIView):
 
     def post(self, request, topic):
 
-        mqtt_client = mqtt.Client("python-mqtt-client")
-        mqtt_client.username_pw_set(MQTT_USER, MQTT_PASS)
-        mqtt_client.connect(MQTT_HOST, MQTT_PORT, 60)
+        try:
+            mqtt_client = mqtt.Client("python-mqtt-client")
+            mqtt_client.username_pw_set(MQTT_USER, MQTT_PASS)
+            mqtt_client.connect(MQTT_HOST, MQTT_PORT, 60)
 
-        #TODO: make it general for all controller
-        result = mqtt_client.publish(
-            f"controller1/{topic}", request.data["value"])
+            # TODO: make it general for all controller
+            result = mqtt_client.publish(
+                f"controller1/{topic}", request.data["value"])
+            mqtt_client.disconnect()
+        except (OSError, KeyError):
+            return Response({"status": "failed"})
 
         if result[0] == 0:
             return Response({"status": "success"})
